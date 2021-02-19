@@ -1,0 +1,3 @@
+C:/Users/Tony/Documents/hw2-math-AnthonyVeschi/build/ga1-win64/CMakeFiles/ga.dir
+C:/Users/Tony/Documents/hw2-math-AnthonyVeschi/build/ga1-win64/CMakeFiles/ALL_BUILD.dir
+C:/Users/Tony/Documents/hw2-math-AnthonyVeschi/build/ga1-win64/CMakeFiles/ZERO_CHECK.dir

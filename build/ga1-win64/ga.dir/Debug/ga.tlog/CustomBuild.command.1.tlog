@@ -1,0 +1,10 @@
+^C:\USERS\TONY\DOCUMENTS\HW2-MATH-ANTHONYVESCHI\SRC\ENGINE\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Tony/Documents/hw2-math-AnthonyVeschi/src/engine -BC:/Users/Tony/Documents/hw2-math-AnthonyVeschi/build/ga1-win64 --check-stamp-file C:/Users/Tony/Documents/hw2-math-AnthonyVeschi/build/ga1-win64/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
