@@ -15,32 +15,32 @@
 
 void ga_mat4f::make_identity()
 {
-	// TODO: Homework 2
+	(*this) = { { { 1, 0, 0, 0 },{ 0, 1, 0, 0 },{ 0, 0, 1, 0 },{ 0, 0, 0, 1 } } };
 }
 
 void ga_mat4f::make_translation(const ga_vec3f& __restrict t)
 {
-	// TODO: Homework 2
+	(*this) = { { { 1, 0, 0, 0 },{ 0, 1, 0, 0 },{ 0, 0, 1, 0 },{ t.x, t.y, t.z, 1 } } };
 }
 
 void ga_mat4f::make_scaling(float s)
 {
-	// TODO: Homework 2
+	(*this) = { { { s, 0, 0, 0 },{ 0, s, 0, 0 },{ 0, 0, s, 0 },{ 0, 0, 0, 1 } } };
 }
 
 void ga_mat4f::make_rotation_x(float angle)
 {
-	// TODO: Homework 2
+	(*this) = { { { 1, 0, 0, 0 },{ 0, cos(angle), sin(angle), 0 },{ 0, -sin(angle), cos(angle), 0 },{ 0, 0, 0, 1 } } };
 }
 
 void ga_mat4f::make_rotation_y(float angle)
 {
-	// TODO: Homework 2
+	(*this) = { { { cos(angle), 0, -sin(angle), 0 },{ 0, 1, 0, 0 },{ sin(angle), 0, cos(angle), 0 },{ 0, 0, 0, 1 } } };
 }
 
 void ga_mat4f::make_rotation_z(float angle)
 {
-	// TODO: Homework 2
+	(*this) = { { { cos(angle), sin(angle), 0, 0 },{ -sin(angle), cos(angle), 0, 0 },{ 0, 0, 1, 0 },{ 0, 0, 0, 1 } } };
 }
 
 void ga_mat4f::translate(const ga_vec3f& __restrict t)
@@ -80,9 +80,27 @@ void ga_mat4f::rotate_z(float angle)
 
 ga_mat4f ga_mat4f::operator*(const ga_mat4f& __restrict b) const
 {
-	// TODO: Homework 2
+	ga_mat4f result;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			result.data[i][j] = 0;
+		}
+	}
 
-	return (*this);
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			for (int k = 0; k < 4; k++)
+			{
+				result.data[i][j] += data[i][k] * b.data[k][j];
+			}
+		}
+	}
+
+	return result;
 }
 
 ga_mat4f& ga_mat4f::operator*=(const ga_mat4f& __restrict m)
@@ -93,28 +111,78 @@ ga_mat4f& ga_mat4f::operator*=(const ga_mat4f& __restrict m)
 
 ga_vec4f ga_mat4f::transform(const ga_vec4f& __restrict in) const
 {
-	// TODO: Homework 2
+	float temp[4] = { 0, 0, 0, 0 };
+	float inn[4];
+	inn[0] = in.x;
+	inn[1] = in.y;
+	inn[2] = in.z;
+	inn[3] = in.w;
 
-	return ga_vec4f::zero_vector();
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			temp[i] += data[j][i] * inn[j];
+		}
+	}
+
+	ga_vec4f result;
+	result.x = temp[0];
+	result.y = temp[1];
+	result.z = temp[2];
+	result.w = temp[3];
+	return result;
 }
 
 ga_vec3f ga_mat4f::transform_vector(const ga_vec3f& __restrict in) const
 {
-	// TODO: Homework 2
+	ga_vec4f temp;
+	temp.x = in.x;
+	temp.y = in.y;
+	temp.z = in.z;
+	temp.w = 0;
 
-	return ga_vec3f::zero_vector();
+	ga_vec4f result = transform(temp);
+	ga_vec3f resultt;
+	resultt.x = result.x;
+	resultt.y = result.y;
+	resultt.z = result.z;
+	return resultt;
 }
 
 ga_vec3f ga_mat4f::transform_point(const ga_vec3f& __restrict in) const
 {
-	// TODO: Homework 2
+	ga_vec4f temp;
+	temp.x = in.x;
+	temp.y = in.y;
+	temp.z = in.z;
+	temp.w = 1;
 
-	return ga_vec3f::zero_vector();
+	ga_vec4f result = transform(temp);
+	ga_vec3f resultt;
+	resultt.x = result.x;
+	resultt.y = result.y;
+	resultt.z = result.z;
+	return resultt;
 }
 
 void ga_mat4f::transpose()
 {
-	// TODO: Homework 2
+	ga_mat4f result;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			result.data[i][j] = data[j][i];
+		}
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			data[i][j] = result.data[i][j];
+		}
+	}
 }
 
 bool ga_mat4f::equal(const ga_mat4f& __restrict b)

@@ -1,6 +1,2 @@
 ﻿  ga_mat4f.cpp
-  ga_mat4f.tests.cpp
-  ga_vec3f.cpp
-  ga_vec3f.tests.cpp
-  Generating Code...
   ga.vcxproj -> C:\Users\Tony\Documents\hw2-math-AnthonyVeschi\build\ga1-win64\Debug\ga.exe
